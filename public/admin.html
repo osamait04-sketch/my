@@ -6,8 +6,8 @@
     <title>لوحة الإدارة الفاخرة | Aura Store</title>
     <style>
         :root {
-            --accent-color: #c5a059; /* لون الأزرار البيج من الصورة */
-            --bg-color: #faf6f0;     /* خلفية الصفحة الكريمية من الصورة */
+            --accent-color: #c5a059; 
+            --bg-color: #faf6f0;     
         }
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
@@ -26,7 +26,6 @@
             border: 1px solid #eae3d8; 
         }
         
-        /* ستايل المجموعات المعروضة حالياً المطابق للصورة */
         .section-title {
             font-size: 22px;
             font-weight: bold;
@@ -56,9 +55,9 @@
             box-sizing: border-box; 
             font-size: 14px; 
             text-align: right;
+            border-radius: 4px;
         }
         
-        /* زر نشر المنتج من الصورة المعروضة */
         .submit-btn { 
             width: 100%; 
             padding: 14px; 
@@ -69,17 +68,16 @@
             font-weight: bold; 
             cursor: pointer; 
             transition: background 0.2s; 
+            border-radius: 4px;
         }
         .submit-btn:hover { background-color: #b38f4b; }
         
-        /* تنسيق جدول المنتجات المطابق للصورة الرابعة تماماً */
         table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; }
         th { background-color: #fcfbf9; padding: 12px; border-bottom: 2px solid #eae3d8; font-weight: bold; font-size: 15px; color: #231f20; }
         td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; vertical-align: middle; text-align: center; }
         
         table img { width: 50px; height: 50px; object-fit: cover; }
 
-        /* ستايل زر سحب القطعة ذو الإطار الأحمر المخصص من صورتك بالملي */
         .delete-btn {
             background: transparent;
             color: #b23b3b;
@@ -90,6 +88,7 @@
             font-weight: bold;
             display: inline-block;
             transition: all 0.2s;
+            border-radius: 4px;
         }
         .delete-btn:hover {
             background: #b23b3b;
@@ -134,12 +133,10 @@
 </div>
 
 <script>
-    // تنسيق السعر بالدينار العراقي
-    function formatKWD(number) {
+    function formatIQD(number) {
         return Number(number).toLocaleString('en-US') + " د.ع";
     }
 
-    // دالة لجلب وعرض المنتجات في الجدول مع خاصية الحذف
     async function loadAdminProducts() {
         const tbody = document.getElementById('adminProductsList');
         try {
@@ -157,7 +154,7 @@
                 row.innerHTML = `
                     <td><img src="${product.image}" alt=""></td>
                     <td style="font-weight:600; color:#231f20;">${product.name}</td>
-                    <td style="color:#c5a059; font-weight:bold;">${formatKWD(product.price)}</td>
+                    <td style="color:#c5a059; font-weight:bold;">${formatIQD(product.price)}</td>
                     <td>
                         <button class="delete-btn" data-id="${product._id}">
                             🗑️ <br> سحب القطعة
@@ -165,21 +162,20 @@
                     </td>
                 `;
 
-                // ربط زر الحذف (سحب القطعة) بالسيرفر مباشرة
                 row.querySelector('.delete-btn').addEventListener('click', async () => {
                     if(confirm(`هل أنت متأكد من سحب قطعة "${product.name}" من العرض؟`)) {
                         try {
                             const delRes = await fetch(`/api/products/${product._id}`, { method: 'DELETE' });
                             const delData = await delRes.json();
                             if(delData.success) {
-                                alert('🗑️ تم سحب القطعة بنجاح من المتجر!');
+                                alert('🗑️ تم سحب القطعة بنجاح!');
                                 loadAdminProducts();
                             } else {
                                 alert('❌ فشل سحب القطعة.');
                             }
                         } catch (err) {
                             console.error(err);
-                            alert('❌ خطأ في الاتصال بالسيرفر.');
+                            alert('❌ خطأ في الاتصال.');
                         }
                     }
                 });
@@ -192,7 +188,6 @@
         }
     }
 
-    // إضافة منتج جديد
     document.getElementById('productForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -211,9 +206,9 @@
             const data = await response.json();
             if (data.success) {
                 messageDiv.style.color = '#27ae60';
-                messageDiv.innerText = '✅ تم حفظ المنتج بنجاح وظهر في المتجر!';
+                messageDiv.innerText = '✅ تم حفظ المنتج بنجاح!';
                 document.getElementById('productForm').reset();
-                loadAdminProducts(); // تحديث الجدول تلقائياً
+                loadAdminProducts();
             } else {
                 messageDiv.style.color = '#c0392b';
                 messageDiv.innerText = '❌ فشل حفظ المنتج!';
@@ -221,11 +216,10 @@
         } catch (error) {
             console.error(error);
             messageDiv.style.color = '#c0392b';
-            messageDiv.innerText = '❌ خطأ في الاتصال بالسيرفر العالمي!';
+            messageDiv.innerText = '❌ خطأ في الاتصال بالسيرفر!';
         }
     });
 
-    // تحميل المنتجات عند فتح الصفحة لأول مرة
     loadAdminProducts();
 </script>
 
