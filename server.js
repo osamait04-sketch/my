@@ -7,21 +7,21 @@ const axios = require('axios');
 const app = express();
 const PORT = process.env.PORT || 10000;
 
-// تفعيل مشاركة الموارد واستقبال الـ JSON
+// تفعيل مشاركة الموارد واستقبل JSON
 app.use(cors());
 app.use(express.json());
 
-// 🛠️ تشغيل ملفات متجرك من مجلد public تلقائياً عشان يفتح المتجر كامل لكل الزباين
+// تشغيل ملفات المتجر من مجلد public تلقائياً
 app.use(express.static(path.join(__dirname, 'public')));
 
-// 🔌 إعدادات التليغرام والـ Chat ID الفعلي الخاص بك
+// 🔌 إعدادات التليغرام الخاصة بك
 const TELEGRAM_TOKEN = "8919879986:AAG12r2b5wzSBqDClPmBZv39gapTmD-NJ0"; 
 const TELEGRAM_CHAT_ID = "7154238531"; 
 
-// 🌐 رابط قاعدة البيانات العالمي بعد دمج الباسورد (osamait04) فيه بنجاح
+// 🌐 رابط قاعدة البيانات العالمية MongoDB Atlas الفعلي الخاص بك
 const MONGO_URI = "mongodb+srv://admin:osamait04@cluster0.hfrvapp.mongodb.net/?appName=Cluster0"; 
 
-// الاتصال بقاعدة البيانات العالمية MongoDB Atlas
+// الاتصال بقاعدة البيانات العالمية
 mongoose.connect(MONGO_URI)
     .then(() => console.log('✅ تم الاتصال بنجاح بقاعدة البيانات العالمية MongoDB Atlas'))
     .catch(err => console.error('❌ فشل الاتصال بقاعدة البيانات:', err));
@@ -34,29 +34,33 @@ const productSchema = new mongoose.Schema({
 });
 const Product = mongoose.model('Product', productSchema);
 
-// جلب كل المنتجات (للعمل بشكل عالمي)
+// 🔍 جلب كل المنتجات من قاعدة البيانات العالمية مباشرة (مع منع الكاش تماماً)
 app.get('/api/products', async (req, res) => {
     try {
-        const products = await Product.find();
+        res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+        res.setHeader('Pragma', 'no-cache');
+        res.setHeader('Expires', '0');
+
+        const products = await Product.find({});
         res.json(products);
     } catch (error) {
-        res.status(500).json({ message: "خطأ في جلب البيانات" });
+        res.status(500).json({ message: "خطأ في جلب البيانات من المونجو" });
     }
 });
 
-// إضافة منتج جديد (من صفحة الأدمن)
+// ➕ إضافة منتج جديد لقاعدة البيانات العالمية
 app.post('/api/products', async (req, res) => {
     try {
         const { name, price, image } = req.body;
-        const newProduct = new Product({ name, price, image });
+        const newProduct = new Product({ name, price: Number(price), image });
         await newProduct.save();
         res.status(201).json({ success: true, product: newProduct });
     } catch (error) {
-        res.status(500).json({ message: "خطأ في حفظ المنتج" });
+        res.status(500).json({ message: "خطأ في حفظ المنتج بالمونجو" });
     }
 });
 
-// حذف منتج (من صفحة الأدمن)
+// ❌ حذف منتج من قاعدة البيانات
 app.delete('/api/products/:id', async (req, res) => {
     try {
         await Product.findByIdAndDelete(req.params.id);
