@@ -1,16 +1,14 @@
-[
-  {
-    "id": 1,
-    "name": "المنتج الأول المميز",
-    "price": "25,000 د.ع",
-    "image": "https://via.placeholder.com/150",
-    "description": "هذا وصف تجريبي للمنتج الأول في المتجر."
+{
+  "name": "my-store",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
   },
-  {
-    "id": 2,
-    "name": "المنتج الثاني الرائع",
-    "price": "40,000 د.ع",
-    "image": "https://via.placeholder.com/150",
-    "description": "هذا وصف تجريبي للمنتج الثاني في المتجر."
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.0.0",
+    "sqlite3": "^5.1.7"
   }
-]
+}
