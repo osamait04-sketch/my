@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة تحكم الأدمن - Aura Store</title>
+    <title>لوحة التحكم الفاخرة - Aura Store</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 500px; background: white; padding: 30px; margin: 50px auto; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
-        h2 { color: #222; }
-        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background-color: #1a1a1a; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; text-align: center; }
+        .container { max-width: 500px; background: white; padding: 35px; margin: 50px auto; border-radius: 12px; box-shadow: 0px 4px 20px rgba(0,0,0,0.08); border: 1px solid #eee; }
+        h2 { color: #1a1a1a; margin-bottom: 25px; font-size: 24px; font-weight: bold; }
+        input { width: 100%; padding: 12px; margin: 12px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        button { width: 100%; padding: 14px; background-color: #1a1a1a; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
         button:hover { background-color: #333; }
-        .msg { margin-top: 15px; font-weight: bold; }
+        .msg { margin-top: 20px; font-weight: bold; font-size: 15px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>➕ إضافة منتج جديد للمتجر</h2>
+    <h2>➕ إضافة قطعة جديدة للمتجر</h2>
     <form id="productForm">
-        <input type="text" id="name" placeholder="اسم القطعة" required>
+        <input type="text" id="name" placeholder="اسم المنتج الفاخر" required>
         <input type="number" id="price" placeholder="السعر بالدولار ($)" required>
-        <input type="text" id="image" placeholder="رابط صورة المنتج (اختياري)">
-        <button type="submit">حفظ ونشر المنتج العالمي</button>
+        <input type="text" id="image" placeholder="رابط صورة المنتج">
+        <button type="submit">نشر وعرض المنتج فوراً</button>
     </form>
     <div id="message" class="msg"></div>
 </div>
@@ -37,7 +37,6 @@
         const messageDiv = document.getElementById('message');
 
         try {
-            // يرسل مباشرة للسيرفر العالمي ليحفظ داخل MongoDB Atlas
             const response = await fetch('/api/products', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -46,17 +45,17 @@
 
             const data = await response.json();
             if (data.success) {
-                messageDiv.style.color = 'green';
-                messageDiv.innerText = '✅ تم حفظ المنتج في قاعدة البيانات العالمية الحقيقية!';
+                messageDiv.style.color = '#27ae60';
+                messageDiv.innerText = '✅ تم حفظ المنتج بنجاح وظهر في جميع الأجهزة!';
                 document.getElementById('productForm').reset();
             } else {
-                messageDiv.style.color = 'red';
-                messageDiv.innerText = '❌ فشل حفظ المنتج!';
+                messageDiv.style.color = '#c0392b';
+                messageDiv.innerText = '❌ فشل حفظ المنتج في السحاب!';
             }
         } catch (error) {
             console.error(error);
-            messageDiv.style.color = 'red';
-            messageDiv.innerText = '❌ خطأ في الاتصال بالسيرفر!';
+            messageDiv.style.color = '#c0392b';
+            messageDiv.innerText = '❌ خطأ في الاتصال بالسيرفر العالمي!';
         }
     });
 </script>

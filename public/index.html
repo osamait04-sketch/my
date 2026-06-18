@@ -5,59 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aura Store | أورا للمقتنيات</title>
     <style>
-        body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0; }
-        header { background-color: #1a1a1a; color: white; padding: 20px; text-align: center; }
-        header h1 { margin: 0; font-size: 28px; letter-spacing: 2px; }
-        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
-        .product-card { background: white; border: 1px solid #ddd; border-radius: 8px; width: 280px; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .product-card img { max-width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
-        .product-card h3 { font-size: 18px; margin: 15px 0 10px; color: #333; }
-        .product-card .price { font-size: 16px; color: #b12704; font-weight: bold; margin-bottom: 15px; }
-        .no-products { font-size: 18px; color: #777; margin-top: 5px; width: 100%; text-align: center; }
-    </style>
-</head>
-<body>
-
-<header>
-    <h1>AURA STORE</h1>
-    <p>EYEWEAR & ACCESSORIES</p>
-</header>
-
-<div class="container" id="productsContainer">
-    <p class="no-products">جاري تحميل المنتجات العالمية...</p>
-</div>
-
-<script>
-    async function loadProducts() {
-        const container = document.getElementById('productsContainer');
-        try {
-            // يجلب مباشرة من السيرفر والمونجو مع كسر كاش المتصفحات
-            const response = await fetch('/api/products?t=' + new Date().getTime());
-            const products = await response.json();
-
-            if (!products || products.length === 0) {
-                container.innerHTML = '<p class="no-products">لا توجد قطع معروضة في الوقت الحالي.</p>';
-                return;
-            }
-
-            container.innerHTML = '';
-            products.forEach(product => {
-                container.innerHTML += `
-                    <div class="product-card">
-                        <img src="${product.image}" alt="${product.name}">
-                        <h3>${product.name}</h3>
-                        <div class="price">$${product.price}</div>
-                    </div>
-                `;
-            });
-        } catch (error) {
-            console.error(error);
-            container.innerHTML = '<p class="no-products" style="color:red;">❌ خطأ في تحميل المنتجات من السيرفر العالمي!</p>';
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #b12704;
+            --bg-color: #f9f9f9;
+            --card-bg: #ffffff;
         }
-    }
-
-    loadProducts();
-</script>
-
-</body>
-</html>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); margin: 0; padding: 0; color: #333; }
+        header { background-color: var(--primary-color); color: white; padding: 30px 20px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        header h1 { margin: 0; font-size: 32px; letter-spacing: 3px; font-weight: bold; }
+        header p { margin: 5px 0 0; font-size: 14px; letter-spacing: 1px; color: #bbb; }
+        
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
+        
+        .product-card { background: var(--card-bg); border-radius: 12px; width: 280px; padding: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: transform 0.3s ease; border: 1px solid #eee; }
+        .product-card:hover { transform: translateY(-5px); }
+        .product-card img { max-width: 100%; height: 220px; object-fit: cover; border-radius: 8px; }
+        .product-card h3 { font-size: 19px; margin: 15px 0 8px; color: #222; }
+        .product-card .price { font-size: 18px; color: var(--accent-color); font-weight: bold; margin-bottom: 15px; }
+        
+        .buy-btn { width: 100%; padding: 10px; background-color: var(--primary-color); color: white; border: none; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
+        .buy-btn:hover { background-color: #333; }
+        
+        /* مودال / نافذة الشراء المنبثقة */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; padding: 30px; border-radius: 12px; width: 90%; max-width: 450px; text-align: center; box-shadow: 0 5px 20px rgba(0,0,0,0.2); position: relative; }
+        .modal h3 { margin-top: 0; color: #222; font-size: 22px; }
+        .modal input, .modal textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        .modal textarea { height: 80px; resize: none; }
+        .submit-order-btn { width: 100%; padding: 12px; background-color: #27ae60; color: white; border: none; border-radius: 6px; font-size: 16px; font
