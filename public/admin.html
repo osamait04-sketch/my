@@ -3,31 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم الفاخرة - Aura Store</title>
+    <title>لوحة الإدارة الفاخرة | Aura Store</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; text-align: center; }
-        .container { max-width: 500px; background: white; padding: 35px; margin: 50px auto; border-radius: 12px; box-shadow: 0px 4px 20px rgba(0,0,0,0.08); border: 1px solid #eee; }
-        h2 { color: #1a1a1a; margin-bottom: 25px; font-size: 24px; font-weight: bold; }
-        input { width: 100%; padding: 12px; margin: 12px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
-        button { width: 100%; padding: 14px; background-color: #1a1a1a; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: background 0.2s; }
-        button:hover { background-color: #333; }
-        .msg { margin-top: 20px; font-weight: bold; font-size: 15px; }
+        :root {
+            --accent-color: #c5a059; /* لون الأزرار البيج من الصورة */
+            --bg-color: #faf6f0;     /* خلفية الصفحة الكريمية من الصورة */
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg-color); 
+            margin: 0; 
+            padding: 20px; 
+            color: #333; 
+        }
+        .container { 
+            max-width: 600px; 
+            background: white; 
+            padding: 30px; 
+            margin: 30px auto; 
+            border-radius: 4px; 
+            box-shadow: 0px 4px 20px rgba(0,0,0,0.02); 
+            border: 1px solid #eae3d8; 
+        }
+        
+        /* ستايل المجموعات المعروضة حالياً المطابق للصورة */
+        .section-title {
+            font-size: 22px;
+            font-weight: bold;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            color: #231f20;
+            border-top: 1px solid #eae3d8;
+            padding-top: 25px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            text-align: right;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #231f20;
+            font-size: 15px;
+        }
+        
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            margin-bottom: 20px; 
+            border: 1px solid #ddd; 
+            background-color: #fff;
+            box-sizing: border-box; 
+            font-size: 14px; 
+            text-align: right;
+        }
+        
+        /* زر نشر المنتج من الصورة المعروضة */
+        .submit-btn { 
+            width: 100%; 
+            padding: 14px; 
+            background-color: var(--accent-color); 
+            color: white; 
+            border: none; 
+            font-size: 15px; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: background 0.2s; 
+        }
+        .submit-btn:hover { background-color: #b38f4b; }
+        
+        /* تنسيق جدول المنتجات المطابق للصورة الرابعة تماماً */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: white; }
+        th { background-color: #fcfbf9; padding: 12px; border-bottom: 2px solid #eae3d8; font-weight: bold; font-size: 15px; color: #231f20; }
+        td { padding: 12px; border-bottom: 1px solid #eee; font-size: 14px; vertical-align: middle; text-align: center; }
+        
+        table img { width: 50px; height: 50px; object-fit: cover; }
+
+        /* ستايل زر سحب القطعة ذو الإطار الأحمر المخصص من صورتك بالملي */
+        .delete-btn {
+            background: transparent;
+            color: #b23b3b;
+            border: 1px solid #b23b3b;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+            transition: all 0.2s;
+        }
+        .delete-btn:hover {
+            background: #b23b3b;
+            color: white;
+        }
+        
+        .msg { margin-top: 15px; font-weight: bold; font-size: 14px; text-align: center; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>➕ إضافة قطعة جديدة للمتجر</h2>
+    <h2 style="text-align: center; color: #231f20; margin-bottom: 25px;">➕ إضافة منتج جديد للمتجر</h2>
     <form id="productForm">
-        <input type="text" id="name" placeholder="اسم المنتج الفاخر" required>
-        <input type="number" id="price" placeholder="السعر بالدولار ($)" required>
-        <input type="text" id="image" placeholder="رابط صورة المنتج">
-        <button type="submit">نشر وعرض المنتج فوراً</button>
+        <label>المسمى / اسم المنتج:</label>
+        <input type="text" id="name" placeholder="مثال: نظارة كلاسيك فخمة" required>
+        
+        <label>السعر الحصري بالدينار العراقي (د.ع):</label>
+        <input type="number" id="price" placeholder="مثال: 25000" required>
+        
+        <label>رابط الصورة الكاملة:</label>
+        <input type="text" id="image" placeholder="ضع رابط الصورة هنا">
+        
+        <button type="submit" class="submit-btn">✨ نشر وعرض المنتج</button>
     </form>
     <div id="message" class="msg"></div>
+
+    <div class="section-title">📦 المجموعات المعروضة حالياً</div>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>التصميم</th>
+                <th>المسمى</th>
+                <th>القيمة</th>
+                <th>التحكم</th>
+            </tr>
+        </thead>
+        <tbody id="adminProductsList">
+            </tbody>
+    </table>
 </div>
 
 <script>
+    // تنسيق السعر بالدينار العراقي
+    function formatKWD(number) {
+        return Number(number).toLocaleString('en-US') + " د.ع";
+    }
+
+    // دالة لجلب وعرض المنتجات في الجدول مع خاصية الحذف
+    async function loadAdminProducts() {
+        const tbody = document.getElementById('adminProductsList');
+        try {
+            const response = await fetch('/api/products?t=' + new Date().getTime());
+            const products = await response.json();
+            
+            tbody.innerHTML = '';
+            if(!products || products.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" style="color:#999;">لا توجد قطع معروضة حالياً</td></tr>';
+                return;
+            }
+
+            products.forEach(product => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><img src="${product.image}" alt=""></td>
+                    <td style="font-weight:600; color:#231f20;">${product.name}</td>
+                    <td style="color:#c5a059; font-weight:bold;">${formatKWD(product.price)}</td>
+                    <td>
+                        <button class="delete-btn" data-id="${product._id}">
+                            🗑️ <br> سحب القطعة
+                        </button>
+                    </td>
+                `;
+
+                // ربط زر الحذف (سحب القطعة) بالسيرفر مباشرة
+                row.querySelector('.delete-btn').addEventListener('click', async () => {
+                    if(confirm(`هل أنت متأكد من سحب قطعة "${product.name}" من العرض؟`)) {
+                        try {
+                            const delRes = await fetch(`/api/products/${product._id}`, { method: 'DELETE' });
+                            const delData = await delRes.json();
+                            if(delData.success) {
+                                alert('🗑️ تم سحب القطعة بنجاح من المتجر!');
+                                loadAdminProducts();
+                            } else {
+                                alert('❌ فشل سحب القطعة.');
+                            }
+                        } catch (err) {
+                            console.error(err);
+                            alert('❌ خطأ في الاتصال بالسيرفر.');
+                        }
+                    }
+                });
+
+                tbody.appendChild(row);
+            });
+        } catch (error) {
+            console.error(error);
+            tbody.innerHTML = '<tr><td colspan="4" style="color:red;">خطأ في تحميل البيانات</td></tr>';
+        }
+    }
+
+    // إضافة منتج جديد
     document.getElementById('productForm').addEventListener('submit', async (e) => {
         e.preventDefault();
         
@@ -46,11 +211,12 @@
             const data = await response.json();
             if (data.success) {
                 messageDiv.style.color = '#27ae60';
-                messageDiv.innerText = '✅ تم حفظ المنتج بنجاح وظهر في جميع الأجهزة!';
+                messageDiv.innerText = '✅ تم حفظ المنتج بنجاح وظهر في المتجر!';
                 document.getElementById('productForm').reset();
+                loadAdminProducts(); // تحديث الجدول تلقائياً
             } else {
                 messageDiv.style.color = '#c0392b';
-                messageDiv.innerText = '❌ فشل حفظ المنتج في السحاب!';
+                messageDiv.innerText = '❌ فشل حفظ المنتج!';
             }
         } catch (error) {
             console.error(error);
@@ -58,6 +224,9 @@
             messageDiv.innerText = '❌ خطأ في الاتصال بالسيرفر العالمي!';
         }
     });
+
+    // تحميل المنتجات عند فتح الصفحة لأول مرة
+    loadAdminProducts();
 </script>
 
 </body>
