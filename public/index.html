@@ -31,7 +31,7 @@
     async function loadProducts() {
         const container = document.getElementById('productsContainer');
         try {
-            // إضافة عشوائية لمنع الكاش وتجبره يجيب البيانات الجديدة من ريندر غصب
+            // يجلب مباشرة من السيرفر والمونجو مع كسر كاش المتصفحات
             const response = await fetch('/api/products?t=' + new Date().getTime());
             const products = await response.json();
 

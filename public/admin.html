@@ -37,6 +37,7 @@
         const messageDiv = document.getElementById('message');
 
         try {
+            // يرسل مباشرة للسيرفر العالمي ليحفظ داخل MongoDB Atlas
             const response = await fetch('/api/products', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -46,7 +47,7 @@
             const data = await response.json();
             if (data.success) {
                 messageDiv.style.color = 'green';
-                messageDiv.innerText = '✅ تم حفظ المنتج بنجاح وظهر لكل الزباين الحين!';
+                messageDiv.innerText = '✅ تم حفظ المنتج في قاعدة البيانات العالمية الحقيقية!';
                 document.getElementById('productForm').reset();
             } else {
                 messageDiv.style.color = 'red';
