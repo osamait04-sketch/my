@@ -3,360 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aura Store | متجر أورا للتميز</title>
+    <title>Aura Store | أورا للمقتنيات</title>
     <style>
-        :root {
-            --bg-cream: #f4ece1;       /* لون البيج الكريمي الفاخر من الشعار */
-            --gold-accent: #c5a880;   /* اللون الذهبي الأنيق */
-            --gold-dark: #aa8b5c;     /* ذهبي غامق للمؤثرات والخطوط */
-            --dark-charcoal: #1a1a1a; /* الأسود الفاخر للنصوص والعناصر الأساسية */
-            --pure-white: #ffffff;
-            --muted-gray: #7e7e7e;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-cream);
-            margin: 0;
-            padding: 0;
-            color: var(--dark-charcoal);
-        }
-
-        header {
-            background-color: var(--dark-charcoal);
-            color: var(--bg-cream);
-            text-align: center;
-            padding: 3rem 1rem;
-            border-bottom: 4px solid var(--gold-accent);
-            position: relative;
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.8rem;
-            font-family: 'Times New Roman', Times, serif;
-            letter-spacing: 2px;
-            color: var(--pure-white);
-        }
-
-        header p {
-            margin: 0.5rem 0 0 0;
-            color: var(--gold-accent);
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            font-weight: 300;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 2.5rem auto;
-            padding: 0 1.5rem;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                grid-template-columns: 3fr 1.1fr;
-            }
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .product-card {
-            background: var(--pure-white);
-            border-radius: 0px; /* تصميم كلاسيكي فاخر بدون زوايا دائرية حادة ليعطي طابع الفخامة */
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
-            border: 1px solid rgba(197, 168, 128, 0.2);
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 25px rgba(197, 168, 128, 0.15);
-            border-color: var(--gold-accent);
-        }
-
-        .product-image {
-            width: 100%;
-            height: 240px;
-            object-fit: cover;
-            background-color: #faf8f5;
-            border-bottom: 1px solid rgba(197, 168, 128, 0.1);
-        }
-
-        .product-info {
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-            text-align: center;
-        }
-
-        .product-name {
-            font-size: 1.3rem;
-            margin: 0 0 0.6rem 0;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-        }
-
-        .product-price {
-            color: var(--gold-dark);
-            font-size: 1.4rem;
-            font-weight: 600;
-            margin-bottom: 1.25rem;
-            font-family: 'Times New Roman', serif;
-        }
-
-        .btn {
-            background-color: var(--dark-charcoal);
-            color: var(--pure-white);
-            border: 1px solid var(--dark-charcoal);
-            padding: 0.85rem;
-            cursor: pointer;
-            font-weight: 500;
-            width: 100%;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .btn:hover {
-            background-color: var(--gold-accent);
-            border-color: var(--gold-accent);
-            color: var(--dark-charcoal);
-        }
-
-        .cart-sidebar {
-            background: var(--pure-white);
-            padding: 2rem;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(197, 168, 128, 0.3);
-            height: fit-content;
-        }
-
-        .cart-sidebar h2 {
-            margin-top: 0;
-            font-family: 'Times New Roman', serif;
-            border-bottom: 1px solid var(--gold-accent);
-            padding-bottom: 0.75rem;
-            font-size: 1.6rem;
-            letter-spacing: 1px;
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.4rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: var(--dark-charcoal);
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid rgba(197, 168, 128, 0.4);
-            background-color: #faf8f5;
-            box-sizing: border-box;
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--dark-charcoal);
-            background-color: var(--pure-white);
-        }
-
-        .cart-items {
-            list-style: none;
-            padding: 0;
-            margin: 1rem 0;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .cart-items li {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.65rem 0;
-            border-bottom: 1px solid rgba(197, 168, 128, 0.15);
-            font-size: 0.95rem;
-        }
-
-        .total-price {
-            font-size: 1.4rem;
-            font-weight: 600;
-            text-align: left;
-            margin: 1.5rem 0;
-            color: var(--dark-charcoal);
-            font-family: 'Times New Roman', serif;
-            border-top: 1px dashed var(--gold-accent);
-            padding-top: 0.75rem;
-        }
-
-        .btn-checkout {
-            background-color: var(--gold-accent);
-            color: var(--dark-charcoal);
-            border: 1px solid var(--gold-accent);
-        }
-
-        .btn-checkout:hover {
-            background-color: var(--dark-charcoal);
-            color: var(--pure-white);
-            border-color: var(--dark-charcoal);
-        }
+        body { font-family: Arial, sans-serif; background-color: #f9f9f9; margin: 0; padding: 0; }
+        header { background-color: #1a1a1a; color: white; padding: 20px; text-align: center; }
+        header h1 { margin: 0; font-size: 28px; letter-spacing: 2px; }
+        .container { max-width: 1200px; margin: 30px auto; padding: 0 20px; display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .product-card { background: white; border: 1px solid #ddd; border-radius: 8px; width: 280px; padding: 15px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .product-card img { max-width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
+        .product-card h3 { font-size: 18px; margin: 15px 0 10px; color: #333; }
+        .product-card .price { font-size: 16px; color: #b12704; font-weight: bold; margin-bottom: 15px; }
+        .no-products { font-size: 18px; color: #777; margin-top: 5px; width: 100%; text-align: center; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>AURA STORE</h1>
-        <p>EYEWEAR & ACCESSORIES</p>
-    </header>
+<header>
+    <h1>AURA STORE</h1>
+    <p>EYEWEAR & ACCESSORIES</p>
+</header>
 
-    <div class="container">
-        <div class="products-grid" id="productsContainer"></div>
+<div class="container" id="productsContainer">
+    <p class="no-products">جاري تحميل المنتجات العالمية...</p>
+</div>
 
-        <div class="cart-sidebar">
-            <h2>🛒 سلة المقتنيات</h2>
-            <ul class="cart-items" id="cartItems"></ul>
-            <div class="total-price">الإجمالي: $<span id="totalPrice">0.00</span></div>
-            
-            <h3 style="font-family: 'Times New Roman', serif; margin-top: 2rem; border-bottom: 1px solid rgba(197, 168, 128, 0.3); padding-bottom: 0.5rem;">📋 تفاصيل التوصيل الفاخر</h3>
-            <div class="form-group">
-                <label>الاسم الكامل:</label>
-                <input type="text" id="customerName" class="form-control" placeholder="الاسم الثلاثي">
-            </div>
-            <div class="form-group">
-                <label>رقم الهاتف:</label>
-                <input type="tel" id="customerPhone" class="form-control" placeholder="077XXXXXXXX">
-            </div>
-            <div class="form-group">
-                <label>العنوان السكني بالكامل:</label>
-                <input type="text" id="customerAddress" class="form-control" placeholder="المحافظة / المنطقة / نقطة دالة">
-            </div>
-            <button class="btn btn-checkout" onclick="checkout()">تأكيد وإتمام الطلب الفوري</button>
-        </div>
-    </div>
+<script>
+    async function loadProducts() {
+        const container = document.getElementById('productsContainer');
+        try {
+            // 🛠️ تم التعديل هنا: جلب المنتجات بشكل نسبي ومباشر لتعمل عند كل الناس في نفس الوقت
+            const response = await fetch('/api/products');
+            const products = await response.json();
 
-    <script>
-        // تم ربط البوت الخاص بك بنجاح هنا من الصور المرفقة المباشرة
-        const TELEGRAM_BOT_TOKEN = '8919879986:AAG12zR2b5wzSBqDClPmBZv39gapTmD-NJ0';
-        const TELEGRAM_CHAT_ID = '7569280319';
-
-        let cart = [];
-        let products = [];
-
-        function loadProducts() {
-            const storedProducts = localStorage.getItem('aura_products');
-            products = storedProducts ? JSON.parse(storedProducts) : [];
-            
-            const container = document.getElementById('productsContainer');
-            container.innerHTML = '';
-            
             if (products.length === 0) {
-                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--muted-gray); padding: 3rem;">لا توجد قطع معروضة في الوقت الحالي.</p>`;
+                container.innerHTML = '<p class="no-products">لا توجد قطع معروضة في الوقت الحالي.</p>';
                 return;
             }
 
-            products.forEach(p => {
+            container.innerHTML = '';
+            products.forEach(product => {
                 container.innerHTML += `
                     <div class="product-card">
-                        <img src="${p.image || 'https://via.placeholder.com/280'}" class="product-image" alt="${p.name}">
-                        <div class="product-info">
-                            <h3 class="product-name">${p.name}</h3>
-                            <div class="product-price">$${parseFloat(p.price).toFixed(2)}</div>
-                            <button class="btn" onclick="addToCart(${p.id})">إضافة إلى السلة</button>
-                        </div>
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <div class="price">$${product.price}</div>
                     </div>
                 `;
             });
+        } catch (error) {
+            console.error(error);
+            container.innerHTML = '<p class="no-products" style="color:red;">❌ خطأ في تحميل المنتجات من السيرفر العالمي!</p>';
         }
+    }
 
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            if (product) {
-                cart.push(product);
-                updateCartUI();
-            }
-        }
+    // تشغيل الدالة تلقائياً أول ما تفتح الصفحة
+    loadProducts();
+</script>
 
-        function updateCartUI() {
-            const cartItems = document.getElementById('cartItems');
-            const totalPrice = document.getElementById('totalPrice');
-            cartItems.innerHTML = '';
-            
-            let total = 0;
-            cart.forEach(item => {
-                total += parseFloat(item.price);
-                cartItems.innerHTML += `<li><span>${item.name}</span> <b>$${parseFloat(item.price).toFixed(2)}</b></li>`;
-            });
-            
-            totalPrice.innerText = total.toFixed(2);
-        }
-
-        async function checkout() {
-            const name = document.getElementById('customerName').value;
-            const phone = document.getElementById('customerPhone').value;
-            const address = document.getElementById('customerAddress').value;
-            const total = parseFloat(document.getElementById('totalPrice').innerText);
-
-            if (cart.length === 0) return alert('السلة لا تحتوي على مقتنيات بعد!');
-            if (!name || !phone || !address) return alert('يرجى كتابة كافة بيانات التوصيل المتبقية لمتابعة طلبك.');
-
-            const itemsList = cart.map((item, index) => `${index + 1}. ${item.name} ($${parseFloat(item.price).toFixed(2)})`).join('\n');
-            const telegramMessage = `✨ *طلب شراء جديد من Aura Store* ✨\n\n` +
-                                    `👤 *الزبون:* ${name}\n` +
-                                    `📞 *الهاتف:* ${phone}\n` +
-                                    `📍 *العنوان:* ${address}\n\n` +
-                                    `📦 *المقتنيات:* \n${itemsList}\n\n` +
-                                    `💰 *الإجمالي الكلي:* $${total.toFixed(2)}\n` +
-                                    `⏰ *التوقيت:* ${new Date().toLocaleString('ar-EG')}`;
-
-            const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-
-            try {
-                const response = await fetch(telegramUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        chat_id: TELEGRAM_CHAT_ID,
-                        text: telegramMessage,
-                        parse_mode: 'Markdown'
-                    })
-                });
-
-                if (response.ok) {
-                    alert('شكراً لتسوقك! تم تأكيد طلبك بنجاح، وستصلك تفاصيل عملية الشراء على التليغرام فوراً.');
-                    cart = [];
-                    updateCartUI();
-                    document.getElementById('customerName').value = '';
-                    document.getElementById('customerPhone').value = '';
-                    document.getElementById('customerAddress').value = '';
-                } else {
-                    alert('حدث خطأ أثناء إتمام الطلب، يرجى التحقق من إعدادات البوت.');
-                }
-            } catch (error) {
-                console.error('Error sending to Telegram:', error);
-                alert('فشل الاتصال، يرجى التحقق من شبكة الإنترنت لديك.');
-            }
-        }
-
-        window.onload = loadProducts;
-    </script>
 </body>
 </html>

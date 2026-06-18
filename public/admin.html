@@ -3,289 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aura Store | لوحة الإدارة الفاخرة</title>
+    <title>لوحة تحكم الأدمن - Aura Store</title>
     <style>
-        :root {
-            --bg-cream: #f4ece1;       /* لون البيج الكريمي الفاخر */
-            --gold-accent: #c5a880;   /* اللون الذهبي الأنيق */
-            --gold-dark: #aa8b5c;     /* ذهبي غامق للخطوط */
-            --dark-charcoal: #1a1a1a; /* الأسود الفاخر */
-            --pure-white: #ffffff;
-            --danger-red: #a83232;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-cream);
-            margin: 0;
-            padding: 0;
-            color: var(--dark-charcoal);
-        }
-
-        header {
-            background-color: var(--dark-charcoal);
-            color: var(--pure-white);
-            padding: 1.5rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 4px solid var(--gold-accent);
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 1.8rem;
-            font-family: 'Times New Roman', Times, serif;
-            letter-spacing: 1px;
-        }
-
-        .btn-view-store {
-            background-color: transparent;
-            color: var(--gold-accent);
-            border: 1px solid var(--gold-accent);
-            padding: 0.6rem 1.2rem;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .btn-view-store:hover {
-            background-color: var(--gold-accent);
-            color: var(--dark-charcoal);
-        }
-
-        .dashboard-container {
-            max-width: 1100px;
-            margin: 2.5rem auto;
-            padding: 0 1.5rem;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-        }
-
-        @media (min-width: 768px) {
-            .dashboard-container {
-                grid-template-columns: 1fr 1.8fr;
-            }
-        }
-
-        .card {
-            background: var(--pure-white);
-            padding: 2rem;
-            border: 1px solid rgba(197, 168, 128, 0.3);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
-            height: fit-content;
-        }
-
-        .card h2 {
-            margin-top: 0;
-            margin-bottom: 1.5rem;
-            font-size: 1.4rem;
-            font-family: 'Times New Roman', serif;
-            border-bottom: 1px solid var(--gold-accent);
-            padding-bottom: 0.6rem;
-            letter-spacing: 0.5px;
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.4rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .form-control {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid rgba(197, 168, 128, 0.4);
-            background-color: #faf8f5;
-            box-sizing: border-box;
-            font-family: inherit;
-        }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--dark-charcoal);
-        }
-
-        .btn-action {
-            background-color: var(--dark-charcoal);
-            color: var(--pure-white);
-            border: 1px solid var(--dark-charcoal);
-            padding: 0.85rem;
-            cursor: pointer;
-            font-weight: 500;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .btn-action:hover {
-            background-color: var(--gold-accent);
-            border-color: var(--gold-accent);
-            color: var(--dark-charcoal);
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: right;
-        }
-
-        th, td {
-            padding: 1rem;
-            border-bottom: 1px solid rgba(197, 168, 128, 0.15);
-        }
-
-        th {
-            background-color: #faf8f5;
-            font-weight: 600;
-            color: var(--dark-charcoal);
-            border-bottom: 2px solid var(--gold-accent);
-        }
-
-        .prod-thumb {
-            width: 55px;
-            height: 55px;
-            object-fit: cover;
-            border: 1px solid rgba(197, 168, 128, 0.2);
-            background-color: #faf8f5;
-        }
-
-        .price-tag {
-            font-weight: 600;
-            color: var(--gold-dark);
-            font-family: 'Times New Roman', serif;
-        }
-
-        .btn-delete {
-            background-color: transparent;
-            color: var(--danger-red);
-            border: 1px solid var(--danger-red);
-            padding: 0.4rem 0.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-delete:hover {
-            background-color: var(--danger-red);
-            color: var(--pure-white);
-        }
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; margin: 0; padding: 20px; text-align: center; }
+        .container { max-width: 500px; background: white; padding: 30px; margin: 50px auto; border-radius: 8px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); }
+        h2 { color: #222; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background-color: #1a1a1a; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        button:hover { background-color: #333; }
+        .msg { margin-top: 15px; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>AURA MANAGEMENT</h1>
-        <a href="index.html" class="btn-view-store">👁️ تصفح صالة العرض</a>
-    </header>
+<div class="container">
+    <h2>➕ إضافة منتج جديد للمتجر</h2>
+    <form id="productForm">
+        <input type="text" id="name" placeholder="اسم القطعة (مثال: نظارة فاخرة)" required>
+        <input type="number" id="price" placeholder="السعر بالدولار ($)" required>
+        <input type="text" id="image" placeholder="رابط صورة المنتج (اختياري)">
+        <button type="submit">حفظ ونشر المنتج العالمي</button>
+    </form>
+    <div id="message" class="msg"></div>
+</div>
 
-    <div class="dashboard-container">
-        <div class="card">
-            <h2>➕ إدراج منتج راقٍ جديد</h2>
-            <div class="form-group">
-                <label>اسم المنتج الفاخر:</label>
-                <input type="text" id="pName" class="form-control" placeholder="مثال: نظارة أورا الكلاسيكية">
-            </div>
-            <div class="form-group">
-                <label>السعر الحصري ($):</label>
-                <input type="number" id="pPrice" class="form-control" placeholder="مثال: 150">
-            </div>
-            <div class="form-group">
-                <label>رابط الصورة الكاملة:</label>
-                <input type="text" id="pImage" class="form-control" placeholder="ضع رابط صورة المنتج هنا">
-            </div>
-            <button class="btn-action" onclick="addProduct()">✨ نشر وعرض المنتج</button>
-        </div>
+<script>
+    document.getElementById('productForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value;
+        const price = document.getElementById('price').value;
+        const image = document.getElementById('image').value || 'https://via.placeholder.com/280';
+        const messageDiv = document.getElementById('message');
 
-        <div class="card">
-            <h2>📦 المجموعات المعروضة حالياً</h2>
-            <div style="overflow-x: auto;">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>التصميم</th>
-                            <th>المسمى</th>
-                            <th>القيمة</th>
-                            <th>التحكم</th>
-                        </tr>
-                    </thead>
-                    <tbody id="adminProductsTable"></tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // دالة لجلب البيانات من الذاكرة المحلية التلقائية
-        function getProducts() {
-            const products = localStorage.getItem('aura_products');
-            return products ? JSON.parse(products) : [];
-        }
-
-        function loadAdminProducts() {
-            const products = getProducts();
-            const tbody = document.getElementById('adminProductsTable');
-            tbody.innerHTML = '';
-
-            if (products.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--muted-gray); padding: 3rem;">لا توجد قطع معروضة في الوقت الحالي.</td></tr>`;
-                return;
-            }
-
-            products.forEach(p => {
-                tbody.innerHTML += `
-                    <tr>
-                        <td><img src="${p.image || 'https://via.placeholder.com/55'}" class="prod-thumb" alt=""></td>
-                        <td style="font-weight: 500;">${p.name}</td>
-                        <td class="price-tag">$${parseFloat(p.price).toFixed(2)}</td>
-                        <td>
-                            <button class="btn-delete" onclick="deleteProduct(${p.id})">🗑️ سحب القطعة</button>
-                        </td>
-                    </tr>
-                `;
+        try {
+            // 🛠️ تم التعديل هنا: استخدام مسار نسبي ليتم الحفظ في السيرفر العالمي الحقيقي فوراً من أي جهاز
+            const response = await fetch('/api/products', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, price: Number(price), image })
             });
+
+            const data = await response.json();
+            if (data.success) {
+                messageDiv.style.color = 'green';
+                messageDiv.innerText = '✅ تم حفظ المنتج بنجاح وظهر لكل الزباين الحين!';
+                document.getElementById('productForm').reset();
+            } else {
+                messageDiv.style.color = 'red';
+                messageDiv.innerText = '❌ فشل حفظ المنتج!';
+            }
+        } catch (error) {
+            console.error(error);
+            messageDiv.style.color = 'red';
+            messageDiv.innerText = '❌ خطأ في الاتصال بالسيرفر!';
         }
+    });
+</script>
 
-        function addProduct() {
-            const name = document.getElementById('pName').value;
-            const price = parseFloat(document.getElementById('pPrice').value);
-            const image = document.getElementById('pImage').value;
-
-            if (!name || !price) return alert('يرجى ملء الاسم والسعر أولاً.');
-
-            const products = getProducts();
-            const newProduct = {
-                id: Date.now(), // معرف فريد لكل منتج
-                name: name,
-                price: price,
-                image: image || 'https://via.placeholder.com/280'
-            };
-
-            products.push(newProduct);
-            localStorage.setItem('aura_products', JSON.stringify(products));
-
-            alert('تم إدراج القطعة الجديدة بنجاح في مجموعات المتجر!');
-            document.getElementById('pName').value = '';
-            document.getElementById('pPrice').value = '';
-            document.getElementById('pImage').value = '';
-            loadAdminProducts();
-        }
-
-        function deleteProduct(id) {
-            if (!confirm('هل تود سحب وإلغاء عرض هذه القطعة من المتجر نهائياً؟')) return;
-
-            let products = getProducts();
-            products = products.filter(p => p.id !== id);
-            localStorage.setItem('aura_products', JSON.stringify(products));
-            loadAdminProducts();
-        }
-
-        // تشغيل التحميل التلقائي للمنتجات عند فتح لوحة التحكم
-        window.onload = loadAdminProducts;
-    </script>
 </body>
 </html>
