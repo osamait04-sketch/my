@@ -19,7 +19,7 @@
 <div class="container">
     <h2>➕ إضافة منتج جديد للمتجر</h2>
     <form id="productForm">
-        <input type="text" id="name" placeholder="اسم القطعة (مثال: نظارة فاخرة)" required>
+        <input type="text" id="name" placeholder="اسم القطعة" required>
         <input type="number" id="price" placeholder="السعر بالدولار ($)" required>
         <input type="text" id="image" placeholder="رابط صورة المنتج (اختياري)">
         <button type="submit">حفظ ونشر المنتج العالمي</button>
@@ -37,7 +37,6 @@
         const messageDiv = document.getElementById('message');
 
         try {
-            // 🛠️ تم التعديل هنا: استخدام مسار نسبي ليتم الحفظ في السيرفر العالمي الحقيقي فوراً من أي جهاز
             const response = await fetch('/api/products', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },

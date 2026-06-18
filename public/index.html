@@ -31,11 +31,11 @@
     async function loadProducts() {
         const container = document.getElementById('productsContainer');
         try {
-            // 🛠️ تم التعديل هنا: جلب المنتجات بشكل نسبي ومباشر لتعمل عند كل الناس في نفس الوقت
-            const response = await fetch('/api/products');
+            // إضافة عشوائية لمنع الكاش وتجبره يجيب البيانات الجديدة من ريندر غصب
+            const response = await fetch('/api/products?t=' + new Date().getTime());
             const products = await response.json();
 
-            if (products.length === 0) {
+            if (!products || products.length === 0) {
                 container.innerHTML = '<p class="no-products">لا توجد قطع معروضة في الوقت الحالي.</p>';
                 return;
             }
@@ -56,7 +56,6 @@
         }
     }
 
-    // تشغيل الدالة تلقائياً أول ما تفتح الصفحة
     loadProducts();
 </script>
 
