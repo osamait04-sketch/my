@@ -220,7 +220,6 @@
             border-color: var(--dark-charcoal);
         }
         
-        /* تأثير أنيق أثناء جلب المنتجات */
         .loading-text {
             grid-column: 1/-1;
             text-align: center;
@@ -244,7 +243,7 @@
         <div class="cart-sidebar">
             <h2>🛒 سلة المقتنيات</h2>
             <ul class="cart-items" id="cartItems"></ul>
-            <div class="total-price">الإجمالي: $<span id="totalPrice">0.00</span></div>
+            <div class="total-price">الإجمالي: <span id="totalPrice">0</span> د.ع</div>
             
             <h3 style="font-family: 'Times New Roman', serif; margin-top: 2rem; border-bottom: 1px solid rgba(197, 168, 128, 0.3); padding-bottom: 0.5rem;">📋 تفاصيل التوصيل الفاخر</h3>
             <div class="form-group">
@@ -267,19 +266,17 @@
         const TELEGRAM_BOT_TOKEN = '8919879986:AAG12zR2b5wzSBqDClPmBZv39gapTmD-NJ0';
         const TELEGRAM_CHAT_ID = '7569280319';
         
-        // رابط الـ API الخاص بـ Backend المرفوع على Render
+        // رابط الـ API العالمي لجلب المنتجات من سيرفر Render الخاص بك
         const BACKEND_API_URL = 'https://my-1-duz9.onrender.com/api/products'; 
 
         let cart = [];
         let products = [];
 
-        // تحويل الدالة إلى Async لتستطيع جلب المنتجات من الإنترنت مباشرة
         async function loadProducts() {
             const container = document.getElementById('productsContainer');
             container.innerHTML = `<p class="loading-text">جاري تحميل تشكيلة أورا الفاخرة...</p>`;
             
             try {
-                // جلب المنتجات من السيرفر الفعلي
                 const response = await fetch(BACKEND_API_URL);
                 if (response.ok) {
                     products = await response.json();
@@ -288,7 +285,6 @@
                 }
             } catch (error) {
                 console.log('تحذير: السيرفر لم يستجب، جاري المحاولة من الذاكرة المحلية...', error);
-                // خطة بديلة: إذا تعطل السيرفر، يقرأ من الذاكرة المحلية للمتصفح
                 const storedProducts = localStorage.getItem('aura_products');
                 products = storedProducts ? JSON.parse(storedProducts) : [];
             }
@@ -301,12 +297,15 @@
             }
 
             products.forEach(p => {
+                // تنسيق السعر بالدينار العراقي مع فواصل الآلاف وبدون كسور عشرية
+                const formattedPrice = parseFloat(p.price).toLocaleString('en-US');
+
                 container.innerHTML += `
                     <div class="product-card">
                         <img src="${p.image || 'https://via.placeholder.com/280'}" class="product-image" alt="${p.name}">
                         <div class="product-info">
                             <h3 class="product-name">${p.name}</h3>
-                            <div class="product-price">$${parseFloat(p.price).toFixed(2)}</div>
+                            <div class="product-price">${formattedPrice} د.ع</div>
                             <button class="btn" onclick="addToCart(${p.id})">إضافة إلى السلة</button>
                         </div>
                     </div>
@@ -330,28 +329,31 @@
             let total = 0;
             cart.forEach(item => {
                 total += parseFloat(item.price);
-                cartItems.innerHTML += `<li><span>${item.name}</span> <b>$${parseFloat(item.price).toFixed(2)}</b></li>`;
+                const itemPriceFormatted = parseFloat(item.price).toLocaleString('en-US');
+                cartItems.innerHTML += `<li><span>${item.name}</span> <b>${itemPriceFormatted} د.ع</b></li>`;
             });
             
-            totalPrice.innerText = total.toFixed(2);
+            // عرض المجموع الإجمالي بالدينار مع فواصل الآلاف الأنيقة
+            totalPrice.innerText = total.toLocaleString('en-US');
         }
 
         async function checkout() {
             const name = document.getElementById('customerName').value;
             const phone = document.getElementById('customerPhone').value;
             const address = document.getElementById('customerAddress').value;
-            const total = parseFloat(document.getElementById('totalPrice').innerText);
+            const totalElement = document.getElementById('totalPrice').innerText;
 
             if (cart.length === 0) return alert('السلة لا تحتوي على مقتنيات بعد!');
             if (!name || !phone || !address) return alert('يرجى كتابة كافة بيانات التوصيل المتبقية لمتابعة طلبك.');
 
-            const itemsList = cart.map((item, index) => `${index + 1}. ${item.name} ($${parseFloat(item.price).toFixed(2)})`).join('\n');
+            // تنسيق المنتجات داخل رسالة التليغرام بالعملة العراقية
+            const itemsList = cart.map((item, index) => `${index + 1}. ${item.name} (${parseFloat(item.price).toLocaleString('en-US')} د.ع)`).join('\n');
             const telegramMessage = `✨ *طلب شراء جديد من Aura Store* ✨\n\n` +
                                     `👤 *الزبون:* ${name}\n` +
                                     `📞 *الهاتف:* ${phone}\n` +
                                     `📍 *العنوان:* ${address}\n\n` +
                                     `📦 *المقتنيات:* \n${itemsList}\n\n` +
-                                    `💰 *الإجمالي الكلي:* $${total.toFixed(2)}\n` +
+                                    `💰 *الإجمالي الكلي:* ${totalElement} د.ع\n` +
                                     `⏰ *التوقيت:* ${new Date().toLocaleString('ar-EG')}`;
 
             const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
